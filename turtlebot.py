@@ -21,6 +21,7 @@ def pose_callback(data):
     prev_x = pose.x
     prev_y = pose.y
     prev_theta = pose.theta
+    #hhj
 
 # Subscribe to the pose topic
 rospy.Subscriber('/turtle1/pose', Pose, pose_callback)
