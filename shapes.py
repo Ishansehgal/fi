@@ -57,16 +57,16 @@ def rotate(angle_deg):
     twist_msg.angular.z = 5  # Angular velocity for rotation
     #target_angle = angle_  # Assuming the angle is already in radians
 
-    while true:
+    while True :
 
         rospy.loginfo("bot is rotating")
         velocity_publisher.publish(twist_msg)
         rospy.sleep(0.1)  # Small delay to allow pose updates
 
-        if tz >= target_angle
+        if tz >= target_angle:
            break
-        
-    # Stop the turtle's rotation
+
+    
     twist_msg.angular.z = 0.0
 
     velocity_publisher.publish(twist_msg)
