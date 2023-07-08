@@ -1,82 +1,92 @@
 #!/usr/bin/env python3
-
 import rospy
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 import math
 
-twist_msg = Twist()
+PI = 3.1415926535897
 
-x = 0
-y = 0
+vel_msg = Twist()
 tz = 0
+velocity_publisher = None
 
-# Callback function for the pose topic
 def pose_callback(pose_message):
-    global x, y, tz
-
-    x = pose_message.x
-    y = pose_message.y
+    global tz
     tz = pose_message.theta
 
-# Function to move the turtle in a straight line
-def move_forward(distance):
-    global x, y
+def move_forward(target_distance):
+    global velocity_publisher
 
-    x0 = x
-    y0 = y
-    distance_moved = 0.0
-    loop_rate = rospy.Rate(10)  # Create a rate object for controlling the publishing frequency
+    # Receiveing the user's input
+    print("Let's move your robot")
+    speed = 2
+    distance = target_distance
 
-    twist_msg.linear.x = 1.0  # Linear velocity in the x direction
-    twist_msg.angular.z = 0.0  # Angular velocity (no rotation)
-    #target_distance = distance  # Assuming the distance is already in meters
+    # Checking if the movement is forward or backwards
+    vel_msg.linear.x = speed
+    vel_msg.linear.y = 0
+    vel_msg.linear.z = 0
+    vel_msg.angular.x = 0
+    vel_msg.angular.y = 0
+    vel_msg.angular.z = 0
 
-    while True:
-        rospy.loginfo("bot is moving forward")
-        velocity_publisher.publish(twist_msg)
+    # Setting the current time for distance calculus
+    t0 = rospy.Time.now().to_sec()
+    current_distance = 0
 
-        loop_rate.sleep()
+    while current_distance < distance:
+        velocity_publisher.publish(vel_msg)
+        t1 = rospy.Time.now().to_sec()
+        current_distance = speed * (t1 - t0)
 
-        distance_moved = abs(0.5 * math.sqrt(((x - x0) ** 2) + ((y - y0) ** 2)))
-        print(distance_moved)
+    # After the loop, stop the robot
+    vel_msg.linear.x = 0
+    velocity_publisher.publish(vel_msg)
 
-        if not (distance_moved < distance):
-            rospy.loginfo("reached")
-            break
 
-    twist_msg.linear.x = 0
-    velocity_publisher.publish(twist_msg)
-    rospy.sleep(0.1)  # Small delay to allow pose updates
+def rotate(deg):
+    global velocity_publisher
 
-def rotate(angle_deg):
-    global twist_msg,tz
-    angle_rad =math.radians(angle_deg)
-    target_angle = tz + angle_rad
-    twist_msg.linear.x = 0.0  # No linear movement
-    twist_msg.angular.z = 5  # Angular velocity for rotation
-    #target_angle = angle_  # Assuming the angle is already in radians
+    # Receiveing the user's input
+    print("Let's rotate your robot")
+    speed = 50
+    angle = deg
 
-    while True :
+    # Converting from angles to radians
+    angular_speed = speed * 2 * PI / 360
+    relative_angle = angle * 2 * PI / 360
 
-        rospy.loginfo("bot is rotating")
-        velocity_publisher.publish(twist_msg)
-        rospy.sleep(0.1)  # Small delay to allow pose updates
+    # We won't use linear components
+    vel_msg.linear.x = 0
+    vel_msg.linear.y = 0
+    vel_msg.linear.z = 0
+    vel_msg.angular.x = 0
+    vel_msg.angular.y = 0
 
-        if tz >= target_angle:
-           break
+    # Set the angular velocity
+    vel_msg.angular.z = angular_speed
 
-    
-    twist_msg.angular.z = 0.0
+    # Set the current time for angle calculus
+    t0 = rospy.Time.now().to_sec()
+    current_angle = 0
 
-    velocity_publisher.publish(twist_msg)
+    while current_angle < relative_angle:
+        velocity_publisher.publish(vel_msg)
+        t1 = rospy.Time.now().to_sec()
+        current_angle = angular_speed * (t1 - t0)
+
+    # Stop the robot
+    vel_msg.angular.z = 0
+    velocity_publisher.publish(vel_msg)
+
 
 def make_square():
     for _ in range(4):
-        move_forward(5)
+        #rospy.sleep(0.1)
+        move_forward(2)
         rotate(90)
 
-# Make a rectangle
+
 def make_rectangle():
     move_forward(5)
     rotate(90)
@@ -94,9 +104,21 @@ if __name__ == '__main__':
     rate = rospy.Rate(10)  # Rate at which to run the ROS loop
     position_topic = "/turtle1/pose"
     pose_subscriber = rospy.Subscriber(position_topic, Pose, pose_callback)
-    while not rospy.is_shutdown():
-            make_square()
-            rospy.sleep(1)  # Pause for 1 second
-            make_rectangle()
-            rospy.sleep(1)  # Pause for 1 second
-    #rotate(90)
+    
+    #while not rospy.is_shutdown():
+    print("enter the shape")
+    shape=input()
+    if(shape=="square"):    
+        make_square()
+        
+
+    elif  (shape=="rectangel"):
+
+            
+        make_rectangle()
+        
+        
+            
+            
+    else : 
+            print("enter right value")
