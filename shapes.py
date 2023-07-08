@@ -92,8 +92,7 @@ if __name__ == '__main__':
     rospy.init_node('turtle_shape_node')
     velocity_publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(10)  # Rate at which to run the ROS loop
-    position_topic = "/turtle1/pose"
-    pose_subscriber = rospy.Subscriber(position_topic, Pose, pose_callback)
+    pose_subscriber = rospy.Subscriber('/turtle1/pose', Pose, pose_callback)
     while not rospy.is_shutdown():
             make_square()
             rospy.sleep(1)  # Pause for 1 second
