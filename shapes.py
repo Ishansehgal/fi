@@ -7,12 +7,11 @@ import math
 PI = 3.1415926535897
 
 vel_msg = Twist()
-tz = 0
+
 velocity_publisher = None
 
-def pose_callback(pose_message):
-    global tz
-    tz = pose_message.theta
+
+    
 
 def move_forward(target_distance):
     global velocity_publisher
@@ -107,8 +106,7 @@ if __name__ == '__main__':
     rospy.init_node('turtle_shape_node')
     velocity_publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(10)  # Rate at which to run the ROS loop
-    position_topic = "/turtle1/pose"
-    pose_subscriber = rospy.Subscriber(position_topic, Pose, pose_callback)
+    
     
     #while not rospy.is_shutdown():
     print("enter the shape")
