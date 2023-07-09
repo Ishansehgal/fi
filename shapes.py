@@ -22,14 +22,9 @@ def move_forward(target_distance):
     speed = 2
     distance = target_distance
 
-    # Checking if the movement is forward or backwards
+   
     vel_msg.linear.x = speed
-    vel_msg.linear.y = 0
-    vel_msg.linear.z = 0
-    vel_msg.angular.x = 0
-    vel_msg.angular.y = 0
-    vel_msg.angular.z = 0
-
+    
     # Setting the current time for distance calculus
     t0 = rospy.Time.now().to_sec()
     current_distance = 0
@@ -57,12 +52,7 @@ def rotate(deg):
     relative_angle = angle * 2 * PI / 360
 
     # We won't use linear components
-    vel_msg.linear.x = 0
-    vel_msg.linear.y = 0
-    vel_msg.linear.z = 0
-    vel_msg.angular.x = 0
-    vel_msg.angular.y = 0
-
+    
     # Set the angular velocity
     vel_msg.angular.z = angular_speed
 
@@ -82,7 +72,7 @@ def rotate(deg):
 
 def make_square():
     for _ in range(4):
-        #rospy.sleep(0.1)
+        
         move_forward(2)
         rospy.sleep(0.1)
         rotate(90)
