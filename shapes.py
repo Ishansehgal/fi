@@ -89,14 +89,22 @@ def make_square():
 
 
 def make_rectangle():
-    move_forward(5)
+    rospy.sleep(0.5)
+    move_forward(4)
+    rospy.sleep(0.5)
     rotate(90)
-    move_forward(3)
+    move_forward(2)
+    rospy.sleep(0.5)
     rotate(90)
-    move_forward(5)
+    rospy.sleep(0.5)
+    move_forward(4)
+    rospy.sleep(0.5)
     rotate(90)
-    move_forward(3)
+    rospy.sleep(0.5)
+    move_forward(2)
+    rospy.sleep(0.5)
     rotate(90)
+    rospy.sleep(0.5)
 def make_star():
     angle = 144
     for _ in range(5):
