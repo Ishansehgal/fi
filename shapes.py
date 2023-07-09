@@ -130,23 +130,23 @@ if __name__ == '__main__':
         shape=input()
         if(shape=="square"):    
             make_square()
-            rospy.sleep(1)
+            rospy.sleep(3)
             reset_turtle()
         
         
 
-        elif  (shape=="rectangel"):
+        elif  (shape=="rectangle"):
 
             
             make_rectangle()
-            rospy.sleep(1)
+            rospy.sleep(3)
             reset_turtle()
 
 
         elif  (shape=="star"):
 
             make_star()
-            rospy.sleep(1)
+            rospy.sleep(3)
             reset_turtle()
         
         elif (shape=="spawn"):
