@@ -84,6 +84,7 @@ def make_square():
     for _ in range(4):
         #rospy.sleep(0.1)
         move_forward(2)
+        rospy.sleep(0.1)
         rotate(90)
 
 
@@ -96,7 +97,13 @@ def make_rectangle():
     rotate(90)
     move_forward(3)
     rotate(90)
-
+def make_star():
+    angle = 144
+    for _ in range(5):
+        move_forward(2)
+        rotate(angle)
+        move_forward(2)
+        rotate(72 - angle)
 
 if __name__ == '__main__':
     rospy.init_node('turtle_shape_node')
@@ -116,6 +123,10 @@ if __name__ == '__main__':
 
             
         make_rectangle()
+
+    elif  (shape=="star"):
+
+        make_star()
         
         
             
