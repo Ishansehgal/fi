@@ -11,63 +11,63 @@ def move( distance):
     publisher.publish(move)
     rospy.sleep(3)
 
-def rotate(publisher, angle):
+def rotate(angle):
     rotate = Twist()
     rotate.angular.z = angle
     publisher.publish(rotate)
     rospy.sleep(3)
 
-def draw_rectangle(publisher):
-    rospy.loginfo("Starting...")
-    move(publisher, 3.0)
-    rotate(publisher, pi/2)
-    move(publisher, 2.0)
-    rotate(publisher, pi/2)
-    move(publisher, 3.0)
-    rotate(publisher, pi/2)
-    move(publisher, 2.0)
+def draw_rectangle():
+    #rospy.loginfo("Starting...")
+    move( 3.0)
+    rotate( pi/2)
+    move(2.0)
+    rotate( pi/2)
+    move(3.0)
+    rotate( pi/2)
+    move( 2.0)
 
-def draw_triangle(publisher):
-    rospy.loginfo("Starting...")
-    move(publisher, 2.0)
-    rotate(publisher, 2 * pi / 3)
-    move(publisher, 2.0)
-    rotate(publisher, 2 * pi / 3)
-    move(publisher, 2.0)
-    rotate(publisher, 2 * pi / 3)
+def draw_triangle():
+    #rospy.loginfo("Starting...")
+    move(2.0)
+    rotate( 2 * pi / 3)
+    move(2.0)
+    rotate(2 * pi / 3)
+    move(2.0)
+    rotate(2 * pi / 3)
 
-def draw_square(publisher):
-    rospy.loginfo("Starting...")
+def draw_square():
+    #rospy.loginfo("Starting...")
     for _ in range(4):
-     move(publisher, 2.0)
+     move( 2.0)
      rospy.sleep(2)
-     rotate(publisher, pi/2)
+     rotate( pi/2)
      rospy.sleep(2)
-def draw_star(publisher):
-    rospy.loginfo("Starting...")
-    move(publisher, 1.0)
-    rotate(publisher, pi / 5)  
-    move(publisher, 1.0)
-    rotate(publisher, -2 * pi / 5) 
-    move(publisher, 1.0)
-    rotate(publisher, 2 * pi / 5) 
-    move(publisher, 1.0)
-    rotate(publisher, -2 * pi / 5)  
-    move(publisher, 1.0)
-    rotate(publisher, pi / 5) 
-    move(publisher, 1.0)
-    rotate(publisher, pi / 2) 
-    move(publisher, 1.0)
-    rotate(publisher, pi / 2) 
-    move(publisher, 1.0)
-    rotate(publisher, pi / 2) 
-    move(publisher, 1.0)
-    rotate(publisher, pi / 2) 
+def draw_star():
+    #rospy.loginfo("Starting...")
+    move(1.0)
+    rotate(pi / 5)  
+    move(1.0)
+    rotate(-2 * pi / 5) 
+    move( 1.0)
+    rotate( 2 * pi / 5) 
+    move( 1.0)
+    rotate(-2 * pi / 5)  
+    move( 1.0)
+    rotate( pi / 5) 
+    move( 1.0)
+    rotate( pi / 2) 
+    move( 1.0)
+    rotate(pi / 2) 
+    move( 1.0)
+    rotate( pi / 2) 
+    move( 1.0)
+    rotate( pi / 2) 
 
 
 if __name__ == '__main__':
     rospy.init_node('Shapes')
-    rospy.loginfo("Welcome Sir")
+    #rospy.loginfo("Welcome Sir")
     publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(10)
    
@@ -83,19 +83,19 @@ if __name__ == '__main__':
         shape = input()
 
         if shape == "Square":
-            draw_square(publisher)
+            draw_square()
             rospy.sleep(2)
             
         elif shape == "Rectangle":
-            draw_rectangle(publisher)
+            draw_rectangle()
             rospy.sleep(3)
 
         elif shape == "Triangle":
-            draw_triangle(publisher)
+            draw_triangle()
             rospy.sleep(3)
 
         elif shape == "Star":
-            draw_star(publisher)
+            draw_star()
             rospy.sleep(3)
 
         else:
