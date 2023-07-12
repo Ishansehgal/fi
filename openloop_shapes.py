@@ -27,7 +27,7 @@ def square():
         rospy.sleep(2)
 
 def rectangle():
-    forward(float(4))
+    forward(float())
     rospy.sleep(2)
     rotate (float(1.57))
     rospy.sleep(2)        
@@ -101,7 +101,7 @@ def spwan_bot():
 if __name__ == '__main__':
     rospy.init_node('shapes')
     shapes = rospy.Publisher('/turtle1/cmd_vel',Twist,queue_size=10)
-    rate = rospy.Rate(5)
+    rate = rospy.Rate(100)
     pose=rospy.Subscriber("/turtle1/Pose",Pose,callback=pose_callback)
     while not rospy.is_shutdown():
         print("enter the shape you want to print")

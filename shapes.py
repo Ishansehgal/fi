@@ -6,11 +6,8 @@ import math
 from turtlesim.srv import Spawn
 from std_srvs.srv import Empty
 PI = 3.1415926535897
-
 vel_msg = Twist()
-
 velocity_publisher = None
-
 def move_forward(target_distance):
     global velocity_publisher
 
@@ -63,8 +60,6 @@ def rotate(deg):
     # Stop the robot
     vel_msg.angular.z = 0
     velocity_publisher.publish(vel_msg)
-
-
 def make_square():
     for _ in range(4):
         
@@ -90,7 +85,6 @@ def make_rectangle():
     rospy.sleep(0.5)
     rotate(90)
     rospy.sleep(0.5)
-
 
 def make_star():
     angle = 144
@@ -122,9 +116,7 @@ if __name__ == '__main__':
     rospy.init_node('turtle_shape_node')
     velocity_publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(10)  # Rate at which to run the ROS loop
-    
-    
-    
+ 
     while not rospy.is_shutdown():
         print("enter the shape")
         shape=input()
@@ -132,27 +124,16 @@ if __name__ == '__main__':
             make_square()
             rospy.sleep(3)
             reset_turtle()
-        
-        
-
-        elif  (shape=="rectangle"):
-
-            
+        elif  (shape=="rectangle"):   
             make_rectangle()
             rospy.sleep(3)
             reset_turtle()
-
-
         elif  (shape=="star"):
-
             make_star()
             rospy.sleep(3)
             reset_turtle()
-        
         elif (shape=="spawn"):
 
-            spwan_bot()    
-            
-            
+            spwan_bot()               
         else : 
             print("enter right value")
