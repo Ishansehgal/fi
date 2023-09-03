@@ -9,8 +9,6 @@ def plan_callback(msg):
         pose_stamped = msg.poses[0]
         pose = pose_stamped.pose
         position = pose.position
-
-        # Access the x, y, z coordinates of the position
         x = position.x
         y = position.y
         z = position.z
